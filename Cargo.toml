@@ -1,0 +1,13 @@
+[package]
+authors = ["Hugo Peixoto <hugo.peixoto@gmail.com>"]
+edition = "2018"
+license = "MIT"
+name = "mail-tools"
+version = "0.1.0"
+
+[dependencies]
+chrono = "0.4.11"
+imap = "1.0.0"
+itertools = "0.8.0"
+mailparse = "0.12.1"
+native-tls = "0.2"
