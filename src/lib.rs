@@ -1,6 +1,6 @@
+extern crate chrono;
 extern crate imap;
 extern crate native_tls;
-extern crate chrono;
 
 use std::io::Write;
 
@@ -26,7 +26,10 @@ pub fn message_body(n: u64, imap_session: &mut ImapSession) -> Option<Message> {
         if let Some(message) = messages.first() {
             return Some(Message {
                 uid: message.uid.unwrap(),
-                body: message.body().map(|x| x.into_iter().map(|&x| x).collect()).unwrap(),
+                body: message
+                    .body()
+                    .map(|x| x.into_iter().map(|&x| x).collect())
+                    .unwrap(),
             });
         }
     }
@@ -36,12 +39,16 @@ pub fn message_body(n: u64, imap_session: &mut ImapSession) -> Option<Message> {
 
 pub fn messages(from: u64, to: u64, imap_session: &mut ImapSession) -> Vec<Message> {
     if let Ok(messages) = imap_session.fetch(format!("{}:{}", from, to), "(UID RFC822)") {
-        return messages.iter().map(|message|
-            Message {
+        return messages
+            .iter()
+            .map(|message| Message {
                 uid: message.uid.unwrap(),
-                body: message.body().map(|x| x.into_iter().map(|&x| x).collect()).unwrap(),
-            }
-        ).collect::<Vec<_>>();
+                body: message
+                    .body()
+                    .map(|x| x.into_iter().map(|&x| x).collect())
+                    .unwrap(),
+            })
+            .collect::<Vec<_>>();
     }
 
     vec![]
@@ -69,7 +76,7 @@ pub fn highest_message_number(imap_session: &mut ImapSession) -> u64 {
             lower = idx;
         } else {
             upper = idx;
-            break
+            break;
         }
     }
 

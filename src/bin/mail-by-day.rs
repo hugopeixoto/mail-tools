@@ -6,8 +6,8 @@ use std::fs;
 use std::io;
 
 use chrono::{DateTime, NaiveDateTime, Utc};
-use std::io::prelude::*;
 use mailparse::*;
+use std::io::prelude::*;
 
 fn main() {
     let mut entries = fs::read_dir("messages")
@@ -36,7 +36,8 @@ fn main() {
                 .replace("Pacific Standard Time", "PST")
                 .replace(" --", " -")
                 .replace("-Nov-", " Nov ")
-                .replace("Dom", "Sun").replace("Dez", "Dec")
+                .replace("Dom", "Sun")
+                .replace("Dez", "Dec")
         })
         .map(|date| dateparse(&date).unwrap())
         .map(|ts| NaiveDateTime::from_timestamp(ts, 0))
